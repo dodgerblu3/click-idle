@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Click Game</title>
+  </head>
+  <body>
+    <div class="game-container">
+      <div class="status">
+        <h2>Point: <span id="pointView">--</span></h2>
+        <h2>Level: <span id="levelView">--</span></h2>
+        <h2>Automation: <span id="autoView">--</span></h2>
+      </div>
+      <p class="cost">
+        Cost required to upgrade level: <span id="LEVEL_Cost">--</span>
+      </p>
+      <p class="cost">
+        Cost required to upgrade automation level:
+        <span id="AUTO_Cost">--</span>
+      </p>
+      <div class="buttons">
+        <button id="addPointBtn">Click</button>
+        <button id="upgradeLevelBtn">Upgrade level</button>
+        <button id="upgradeAutoBtn">Upgrade automation</button>
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>
