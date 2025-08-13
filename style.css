@@ -39,16 +39,31 @@ body {
   justify-content: center;
   gap: 30px;
   flex-wrap: wrap;
+  h2 {
+    margin-block: 0;
+  }
 }
 
-.cost {
-  font-size: 1.2rem;
-  color: var(--secondary-color);
-  margin-bottom: 30px;
-  font-weight: bold;
-  span {
-    color: #f38;
+.cost-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block: 50px;
+  gap: 50px;
+  .cost {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-block: 0;
+    span {
+      color: #f38;
+    }
   }
+}
+
+.scale-animation {
+  animation: SCALE-animation 0.3s ease-in-out;
 }
 
 .buttons {
@@ -65,7 +80,7 @@ body {
     border: none;
     background-color: var(--primary-color);
     color: var(--button-text-color);
-    box-shadow: 0 0 20px #38f8;
+    box-shadow: 0 0 30px #38f8;
     opacity: 1;
     font-size: 1.2rem;
     cursor: pointer;
@@ -81,5 +96,24 @@ body {
     &:active {
       scale: 1;
     }
+  }
+}
+
+@media (width < 600px) {
+  .cost-view {
+    margin-block: 20px;
+    gap: 20px;
+  }
+}
+
+@keyframes SCALE-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
   }
 }

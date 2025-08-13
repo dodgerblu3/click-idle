@@ -31,7 +31,7 @@ ui.upgradeLevelBtn.addEventListener("click", () => {
   if (Status.point >= Status.levelCost) {
     Status.point -= Status.levelCost;
     Status.level++;
-    Status.levelCost = (Status.level + 1) * 12;
+    Status.levelCost = (Status.level + 1) * 16;
     updateUi();
   }
 });
