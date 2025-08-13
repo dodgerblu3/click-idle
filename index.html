@@ -3,11 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="シンプルなクリック放置" />
+    <meta name="author" content="dodgerBlu3" />
     <link rel="stylesheet" href="./style.css" />
-    <title>Click Game</title>
+    <title>Click Buttons.</title>
   </head>
   <body>
-    <div class="game-container">
+    <div class="game-container" id="gameContent">
       <div class="status">
         <h2>Point: <span id="pointView">--</span></h2>
         <h2>Level: <span id="levelView">--</span></h2>
@@ -23,9 +25,10 @@
         </p>
       </div>
       <div class="buttons">
-        <button id="addPointBtn">Click</button>
+        <button id="addPointBtn">Click!!</button>
         <button id="upgradeLevelBtn">Upgrade level</button>
         <button id="upgradeAutoBtn">Upgrade automation</button>
+        <button class="danger" id="resetBtn">RESET</button>
       </div>
     </div>
     <script src="./script.js"></script>

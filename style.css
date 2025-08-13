@@ -2,9 +2,12 @@
   color-scheme: light dark;
   --primary-color: #38f;
   --secondary-color: #fa3;
+  --danger-color: #f38;
   --background-color: light-dark(#e1e7f0, #050e1a);
   --text-color: light-dark(#050e1a, #e1e7f0);
   --button-text-color: #e1e7f0;
+  /* modal */
+  --modal-bg-color: light-dark(#dfe6ed, #2d2f33);
 }
 
 body {
@@ -22,14 +25,53 @@ body {
   grid-template-rows: 1fr 3fr 1fr;
 }
 
+.delete-data-view {
+  width: 100%;
+  height: 100%;
+  /* Layout */
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 3fr 1fr;
+  animation: zoom-in 0.1s ease-in;
+  .deleteData {
+    border-radius: 13px;
+    background-color: var(--modal-bg-color);
+    text-align: center;
+    /* Layout */
+    grid-column: 2;
+    grid-row: 2;
+    .modal-container {
+      height: 100%;
+      width: 100%;
+      /* Layout */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      div {
+        padding: 10px;
+        h2 {
+          width: 100%;
+          margin-bottom: 50px;
+        }
+      }
+    }
+  }
+}
+
 .game-container {
   text-align: center;
+  opacity: 1;
+  transition: 0.3s ease;
   /* Layout */
   grid-column: 2;
   grid-row: 2;
-  .point-view {
-    font-size: 2rem;
-  }
+}
+
+.hidden-element {
+  display: none;
+  opacity: 0.3;
 }
 
 .status {
@@ -41,7 +83,14 @@ body {
   flex-wrap: wrap;
   h2 {
     margin-block: 0;
+    span {
+      transition: opacity 0.1s ease;
+    }
   }
+}
+
+.text-effect {
+  opacity: 0;
 }
 
 .cost-view {
@@ -57,7 +106,7 @@ body {
     font-weight: bold;
     margin-block: 0;
     span {
-      color: #f38;
+      color: var(--primary-color);
     }
   }
 }
@@ -84,11 +133,14 @@ body {
     opacity: 1;
     font-size: 1.2rem;
     cursor: pointer;
-    transition-duration: 0.1s;
-    transition-timing-function: ease-in-out;
+    transition: 0.1s ease-in-out;
     &:active {
       scale: 0.9;
     }
+  }
+  .danger {
+    background-color: var(--danger-color);
+    box-shadow: 0 0 30px #f338;
   }
   .invalid {
     opacity: 0.5;
@@ -104,6 +156,12 @@ body {
     margin-block: 20px;
     gap: 20px;
   }
+  .deleteDataView {
+    grid-template-columns: 1fr 5fr 1fr;
+    .deleteData .modal-container div h2 {
+      margin-bottom: 20px;
+    }
+  }
 }
 
 @keyframes SCALE-animation {
@@ -115,5 +173,16 @@ body {
   }
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes zoom-in {
+  0% {
+    scale: 0.5;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
   }
 }

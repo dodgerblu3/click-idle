@@ -1,4 +1,6 @@
 const ui = {
+  body: document.querySelector("body"),
+  gameContent: document.getElementById("gameContent"),
   pointView: document.getElementById("pointView"),
   levelView: document.getElementById("levelView"),
   autoView: document.getElementById("autoView"),
@@ -7,21 +9,27 @@ const ui = {
   addPointBtn: document.getElementById("addPointBtn"),
   upgradeLevelBtn: document.getElementById("upgradeLevelBtn"),
   upgradeAutoBtn: document.getElementById("upgradeAutoBtn"),
+  resetBtn: document.getElementById("resetBtn"),
 };
 
-const Status = {
+let Status = {
   point: 0,
   level: 1,
   auto: 1,
   isAuto: false,
   levelCost: 10,
   autoCost: 10,
-  autoInterval: 700,
 };
+
+const clickSound = new Audio("click-sound.mp3");
+
+if (localStorage.getItem("status") !== null) {
+  Status = JSON.parse(localStorage.getItem("status"));
+}
 
 updateUi();
 
-// Update Status when click button
+// --- Update Status when click button ---
 ui.addPointBtn.addEventListener("click", () => {
   Status.point += Status.level;
   updateUi();
@@ -29,6 +37,8 @@ ui.addPointBtn.addEventListener("click", () => {
 
 ui.upgradeLevelBtn.addEventListener("click", () => {
   if (Status.point >= Status.levelCost) {
+    clickSound.currentTime = 0;
+    clickSound.play();
     Status.point -= Status.levelCost;
     Status.level++;
     Status.levelCost = (Status.level + 1) * 16;
@@ -38,6 +48,8 @@ ui.upgradeLevelBtn.addEventListener("click", () => {
 
 ui.upgradeAutoBtn.addEventListener("click", () => {
   if (Status.point >= Status.autoCost) {
+    clickSound.currentTime = 0;
+    clickSound.play();
     if (!Status.isAuto) {
       Status.isAuto = true;
     }
@@ -54,10 +66,67 @@ setInterval(() => {
     Status.point += Status.auto - 1;
     updateUi();
   }
-}, Status.autoInterval);
+}, 500);
 
-// Update UI
+//  --- Reset button ---
+ui.resetBtn.addEventListener("click", () => {
+  ui.body.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="delete-data-view" id="deleteDataView">
+      <div class="deleteData">
+        <div class="modal-container">
+          <div>
+            <h2>Are you sure you want to delete the data?</h2>
+            <div class="buttons">
+              <button id="cancelBtn">Cancel</button>
+              <button class="danger" id="deleteBtn">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  );
+
+  ui.gameContent.classList.add("hidden-element");
+
+  let deleteModal = {
+    deleteDataView: document.getElementById("deleteDataView"),
+    cancelBtn: document.getElementById("cancelBtn"),
+    deleteBtn: document.getElementById("deleteBtn"),
+  };
+
+  deleteModal.cancelBtn.addEventListener("click", () => {
+    ui.gameContent.classList.remove("hidden-element");
+    deleteModal.deleteDataView.remove();
+  });
+
+  deleteModal.deleteBtn.addEventListener("click", () => {
+    if (localStorage.getItem("status") !== null) {
+      localStorage.removeItem("status");
+    }
+    Status.point = 0;
+    Status.level = 1;
+    Status.auto = 1;
+    Status.isAuto = false;
+    Status.levelCost = 10;
+    Status.autoCost = 10;
+    updateUi();
+    ui.gameContent.classList.remove("hidden-element");
+    deleteModal.deleteDataView.remove();
+  });
+});
+
+// --- Save status data to localStorage ---
+window.addEventListener("beforeunload", (event) => {
+  localStorage.setItem("status", JSON.stringify(Status));
+});
+
+// --- Update UI ---
 function updateUi() {
+  ui.pointView.classList.add("text-effect");
+  setTimeout(() => {
+    ui.pointView.classList.remove("text-effect");
+  }, 200);
   ui.pointView.textContent = Status.point;
   ui.levelView.textContent = Status.level;
   ui.autoView.textContent = Status.auto;
