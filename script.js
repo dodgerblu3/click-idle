@@ -116,11 +116,6 @@ ui.resetBtn.addEventListener("click", () => {
   });
 });
 
-// --- Save status data to localStorage ---
-window.addEventListener("beforeunload", (event) => {
-  localStorage.setItem("status", JSON.stringify(Status));
-});
-
 // --- Update UI ---
 function updateUi() {
   ui.pointView.classList.add("text-effect");
@@ -147,4 +142,5 @@ function updateUi() {
   } else {
     ui.upgradeAutoBtn.classList.add("invalid");
   }
+  localStorage.setItem("status", JSON.stringify(Status));
 }
